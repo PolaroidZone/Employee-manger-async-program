@@ -1,0 +1,19 @@
+{
+  "projects": [
+    {
+      "projectId": 101,
+      "projectName": "Project A",
+      "description": "A web application development project"
+    },
+    {
+      "projectId": 102,
+      "projectName": "Project B",
+      "description": "An e-commerce platform development project"
+    },
+    {
+      "projectId": 103,
+      "projectName": "Project C",
+      "description": "A data analysis project"
+    }
+  ]
+}
