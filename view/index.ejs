@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <ul id="employeeList"></ul>
+        </div>
+    </section>
+    <script>
+        fetch('/employees')
+        .then((response) => response.json())
+        .then((data) => {
+            const employeeList = document.getElementById('employeeList');
+            data.forEach((employee) => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `Name: ${employee.name}, ID: ${employee.id}, CreatedAt: ${employee.createdAt}`;
+                employeeList.appendChild(listItem);
+            });
+        }).catch((error) => {
+            console.error(error);
+        })
+    </script>
+</body>
+</html>
