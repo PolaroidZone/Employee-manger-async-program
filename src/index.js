@@ -64,4 +64,27 @@ app.get('/project/:id', async (req, res) => {
   }
 });
 
+// API to get Employee details along with Project details
+app.get('/getemployeedetails/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+
+    const employeeResponse = await fetch(`http://localhost:3000/employee/${id}`);
+    const employee = await employeeResponse.json();
+
+    const projectId = employee.projectId;
+    const projectResponse = await fetch(`http://localhost:3000/project/${projectId}`);
+    const project = await projectResponse.json();
+
+    const employeeDetailsWithProject = {
+      ...employee,
+      project,
+    };
+
+    res.json(employeeDetailsWithProject);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
