@@ -1,15 +1,33 @@
 const express = require('express')
+const request = require('request')
 const app = express()
 const port = 3000
 // Import fs module
 const fs = require('fs')
 
+//api Url
 
+const apiUrl = 'http://5c055de56b84ee00137d25a0.mockapi.io/api/v1/employees'
+
+app.set('view engine', 'ejs')
+
+app.use(express.static('../view'));
 //Set up default API
 // API to fetch all employees
 app.get('/', async (req, res) => {
-    res.send('Hello there! enter there api call!')
+    res.render('../view/index.ejs')
 })
+
+// API to fetch employee list 
+
+app.get('/employees', async (req, res) => {
+  request(apiUrl, {json: true}, (error, response, body) => {
+    if (error) {
+      return res.status(500).json({message: 'Error getting employees from API!'});
+    }
+    res.json(body);
+  });
+});
 
 //get all employees
 
@@ -77,7 +95,7 @@ app.get('/getemployeedetails/:id', async (req, res) => {
     const project = await projectResponse.json();
 
     const employeeDetailsWithProject = {
-      ...employee,
+      ...employee, 
       project,
     };
 
