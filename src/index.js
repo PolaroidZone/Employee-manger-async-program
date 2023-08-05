@@ -27,5 +27,23 @@ app.get('/getemployeedetails', (req, res) => {
     }
   });
 
+// API to fetch Employee data by ID
+app.get('/employee/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const employeeData = fs.readFileSync('./data/employee.json', 'utf8');
+    const employees = JSON.parse(employeeData).employees;
+    const employee = employees.find((emp) => emp.id === id);
+
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found.' });
+    }
+
+    res.json(employee);
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
 
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
